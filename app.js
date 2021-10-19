@@ -33,6 +33,7 @@ const reviewRoutes = require('./routes/reviews')
 const { merge } = require('./routes/campgrounds')
 const { contentSecurityPolicy } = require('helmet')
 const MongoStore = require('connect-mongo')
+const { prototype } = require('keyv')
 
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/YelpCamp'
 mongoose.connect(dbUrl, {
@@ -187,7 +188,7 @@ app.use((err, req, res, next) => {
     if(!err.message) err.message = 'Ooops, an error has occurred.'
     res.status(statusCode).render('error', { err })
 })
-
-app.listen(3000, () => {
-    console.log('Serving on port 3000')
+const port = process.env.PORT || 3000
+app.listen(port, () => {
+    console.log(`Serving on port ${port}`)
 })
